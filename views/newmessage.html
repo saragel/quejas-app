@@ -1,0 +1,11 @@
+{%extends "base.html"%}
+
+{% block article %}
+
+<form action="/queja" method="POST">
+    <label for="queja"></label>
+    <textarea name="queja"></textarea>
+    <button type="submit">Subir</button>
+</form>
+
+{% endblock article %}

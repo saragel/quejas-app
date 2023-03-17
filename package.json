@@ -1,0 +1,28 @@
+{
+  "name": "app-quejas",
+  "version": "1.0.0",
+  "description": "my first complete app",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest",
+    "start": "nodemon app.js"
+  },
+  "keywords": [
+    "app",
+    "express",
+    "nunjucks",
+    "nodemon",
+    "javascript",
+    "mysql"
+  ],
+  "author": "Sara Ragel",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql": "^2.18.1",
+    "nunjucks": "^3.2.3"
+  }
+}

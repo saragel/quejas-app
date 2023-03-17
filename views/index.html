@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block article %}
+
+{% for let i in complain %}
+<hr/>
+<article>
+    <p>{{complain.body}}</p> <!-- definir bien variables en doc javascript -->
+    <p>{{complain.date}}</p>
+</article>
+{% endfor %}
+
+{% endblock article %}
