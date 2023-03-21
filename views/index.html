@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block article %}
-<h1>Aquí están todas las quejas</h1>
+<h1>Aquí están todas las quejas 💅</h1>
 
 {% for complain in complains %}
 <article>
     <div class="queja">
-        <p>{{complain.body}}</p> 
+        <p class="body">{{complain.body}}</p> 
         <p>{{dateFormat(complain.date)}}</p>
     </div>
 </article>

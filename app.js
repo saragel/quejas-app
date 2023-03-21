@@ -2,8 +2,12 @@ const express = require('express');
 const app = express();
 const port = 8000;
 const nunjucks = require('nunjucks');
-const session = require('express-session')
 const path = require('path');
+
+/* TODO: bcrypt
+    sessions
+    separa módulo sessions
+    crear barra búsqueda q me busque queja por id */
 
 app.listen (port);
 app.use(express.urlencoded({ extended: true })); // para que el servidor procese bien los datos del formulario
@@ -19,8 +23,19 @@ const connection = mysql.createConnection ({
     host : 'localhost',
     database : 'quejas',
     user : 'quejas',
-    password : 'passpass' // fallo de seguridad
+    password : 'passpass' // fallo de seguridad, usar bcrypt
 });
+
+const session = require('express-session');
+const oneDay = 1000 * 60 * 60 * 24; // tiempo de un día usando milisegundos
+
+// session middleware
+app.use(session({
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767", // (hash) lo q se utiliza para encriptar la "sessionid", lo q se guarda en la cookie
+    saveUninitialized:true,
+    cookie: { maxAge: oneDay }, // el tiempo q el navegador tarda en eliminar la cookie
+    resave: false 
+}));
 
 connection.connect(function(err){
     if (err) {
@@ -43,11 +58,6 @@ app.get ('/', (_, res)=>{
 app.get ('/login', (_, res)=> {
     res.render ("login.html");
 });
-/* app.post ('/sesion??', (req, res)=>{
-    let user = req.body.username;
-    let password = req.body.password;
-    'INSERT INTO ' // insertar user y password en db, control de sesiones
-}); */
 
 app.post ('/queja', (req, res)=> { // mete lo q se introduza en los campos del form (keja y fexa) en los campos respectivos de la db
     let data = {
@@ -86,6 +96,7 @@ app.get('/:id', (req, res) => {
         console.log ('Complain found!');
         res.render("queja.html", {complain: rows[0]}); 
         }
+        // TODO: cambiar formato fecha
     });
 }); 
 

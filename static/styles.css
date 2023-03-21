@@ -3,6 +3,9 @@
     background-color: #F2EFE9;
     color: #252627;
     font-size: 11pt;
+    text-align: center;
+    /* align-items: center;
+    justify-content: center; */
 }
 h1 {
     font-size: 30pt;
@@ -14,8 +17,10 @@ h2 {
     border: #252627 solid;
     border-width: 1px;
     padding: 10px;
-    margin: 2.5px;
+    margin: 5px;
     border-radius: 10px;
+    box-sizing: border-box;
+    /* width: 500px; */
 }
 ul {
     display: flex;
@@ -29,4 +34,7 @@ button {
     background-color: #252627;
     color:#F2EFE9;
     padding: 7.5px;
+}
+.body {
+    font-weight: bold;
 }
