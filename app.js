@@ -26,16 +26,30 @@ const connection = mysql.createConnection ({
     password : 'passpass' // fallo de seguridad, usar bcrypt
 });
 
-const session = require('express-session');
+const sessions = require('express-session');
 const oneDay = 1000 * 60 * 60 * 24; // tiempo de un día usando milisegundos
 
 // session middleware
-app.use(session({
-    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767", // (hash) lo q se utiliza para encriptar la "sessionid", lo q se guarda en la cookie
+app.use(sessions({
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767", // (hash) lo q se utiliza para encriptar el sessionid, lo q se guarda en la cookie
     saveUninitialized:true,
     cookie: { maxAge: oneDay }, // el tiempo q el navegador tarda en eliminar la cookie
     resave: false 
 }));
+
+// usuario y contraseña q se deberán autenticar, normalmente se guardan en db, pero la info de esta sesión se guarda en memoria
+const myusername = 'user1'
+const mypassword = 'mypassword'
+
+/*     let session = req.session;
+    if (session.userid) {
+        res.send (`Bienvenid@ ${req.body.username}`);
+    }
+    else {
+        res.send ('Usuario no encontrado');
+    } 
+    CONSEGUIR Q COMPRUEBE Q EL USER/PASS COINCIDAN
+    */
 
 connection.connect(function(err){
     if (err) {
@@ -94,9 +108,8 @@ app.get('/:id', (req, res) => {
         }
         else {
         console.log ('Complain found!');
-        res.render("queja.html", {complain: rows[0]}); 
+        res.render("queja.html", {complain: rows[0], dateFormat: (d)=> d.toDateString()}); 
         }
-        // TODO: cambiar formato fecha
     });
 }); 
 
