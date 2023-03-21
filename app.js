@@ -63,14 +63,16 @@ app.post ('/queja', (req, res)=> { // mete lo q se introduza en los campos del f
     res.redirect('/');
 }); 
 
-app.get('/queja/:id', (req, res) => {
+app.get('/:id', (req, res) => {
     let id = req.params.id;
-    connection.query('SELECT * FROM quejas2 WHERE id=?', id, function (err, rows, _) {
+    connection.query('SELECT * FROM quejas2 WHERE id = ?', id, function (err, rows, _) {
         if (err) {
             throw err;
         }
         console.log(rows);
-        // Y si no da nada?
+        if (rows.length == 0) {
+            console.log ('Complain not found!');
+        }
         res.render("queja.html", {complain: rows[0]});
     });
 
