@@ -49,7 +49,7 @@ app.get ('/login', (_, res)=> {
     'INSERT INTO ' // insertar user y password en db, control de sesiones
 }); */
 
-app.post ('/queja', (req, _)=> { // mete lo q se introduza en los campos del form (keja y fexa) en los campos respectivos de la db
+app.post ('/queja', (req, res)=> { // mete lo q se introduza en los campos del form (keja y fexa) en los campos respectivos de la db
     let data = {
         body: req.body.keja,
         date: new Date () 
@@ -60,6 +60,7 @@ app.post ('/queja', (req, _)=> { // mete lo q se introduza en los campos del for
         }
         console.log ('Values added succesfully!');
     });
+    res.redirect('/');
 }); 
 
 app.get('/queja/:id', (req, res) => {

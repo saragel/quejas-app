@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="keywords" content="JavaScript, Node, Nunjucks, Express, MySQL, App"/>
-        <meta name="author" content="Sara Ragel" />
-        <meta name="description"
-        content="Una app sencilla donde los usuarios pueden colgar sus quejas"/>
-        <link rel="stylesheet" href="/static/styles.css">
-        <title>Quejas</title>
-    </head>
-    <body>
-        <header>
-            <nav>
-                <ul class="nav">
-                    <li>
-                        <a href="/new">Escribe una nueva queja!</a>
-                    </li>
-                    <li>
-                        <a href="/login"> Inicia sesión para poner tu queja! </a>
-                    </li>
-                    <li>
-                        <a href="/">Volver al inicio</a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
-        <main>
-            <article>
-                {%block article%}
-                {%endblock article%}
-            </article>
-        </main>
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="JavaScript, Node, Nunjucks, Express, MySQL, App" />
+    <meta name="author" content="Sara Ragel" />
+    <meta name="description" content="Una app sencilla donde los usuarios pueden colgar sus quejas" />
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Quejas</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="nav">
+                    <a href="/new">Escribe una nueva queja!</a>
+                </li>
+                <li class="nav">
+                    <a href="/login"> Inicia sesión para poner tu queja! </a>
+                </li>
+                <li class="nav">
+                    <a href="/">Volver al inicio</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <article>
+            {%block article%}
+            {%endblock article%}
+        </article>
+    </main>
+</body>
+
 </html>
