@@ -63,6 +63,14 @@ app.post ('/queja', (req, res)=> { // mete lo q se introduza en los campos del f
     res.redirect('/');
 }); 
 
+app.get ('/new', (_, res)=> {
+    res.render ("newmessage.html");
+});
+
+app.get ('/notfound', (_, res)=>{
+    res.render ('error.html');
+});
+
 app.get('/:id', (req, res) => {
     let id = req.params.id;
     connection.query('SELECT * FROM quejas2 WHERE id = ?', id, function (err, rows, _) {
@@ -72,15 +80,14 @@ app.get('/:id', (req, res) => {
         console.log(rows);
         if (rows.length == 0) {
             console.log ('Complain not found!');
+            res.redirect ('/notfound');
         }
-        res.render("queja.html", {complain: rows[0]});
+        else {
+        console.log ('Complain found!');
+        res.render("queja.html", {complain: rows[0]}); 
+        }
     });
-
 }); 
-
-app.get ('/new', (_, res)=> {
-    res.render ("newmessage.html");
-});
 
 // connection.end();
 

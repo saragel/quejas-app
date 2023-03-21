@@ -1,9 +1,14 @@
 * {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Fira Code', monospace;
     background-color: #F2EFE9;
     color: #252627;
-    justify-content: center;
-    justify-items: center;
+    font-size: 11pt;
+}
+h1 {
+    font-size: 30pt;
+}
+h2 {
+    font-size: 25pt;
 }
 .queja {
     border: #252627 solid;
@@ -12,12 +17,16 @@
     margin: 2.5px;
     border-radius: 10px;
 }
-.nav {
+ul {
     display: flex;
     list-style: none;
 }
 li {
-    padding-left: 20px;
-    padding-right: 20px;
-    
+    padding-left: 15px;
+    padding-right: 15px;
+}
+button {
+    background-color: #252627;
+    color:#F2EFE9;
+    padding: 7.5px;
 }
