@@ -1,13 +1,17 @@
 {% extends "base.html" %}
 
 {% block article %}
+<h1>Aquí están todas las quejas</h1>
 
-{% for let i in complain %}
-<hr/>
+{% for complain in complains %}
 <article>
-    <p>{{complain.body}}</p> <!-- definir bien variables en doc javascript -->
-    <p>{{complain.date}}</p>
+    <div class="queja">
+        <p>{{complain.body}}</p> 
+        <p>{{dateFormat(complain.date)}}</p>
+    </div>
 </article>
+{% else %}
+<h2>Lista de quejas vacía </h2>
 {% endfor %}
 
 {% endblock article %}

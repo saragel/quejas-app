@@ -1,10 +1,13 @@
 {%extends "base.html"%}
 
-{% block article %} <!-- esto a ver donde lo meto -->
+{% block article %} 
 
 <section>
-    <p>{{ body }}</p> <!--que me muestre la queja por id-->
-    <p>{{ date }}</p>
+    <div class="queja">
+        <p>{{ complain.body }}</p> 
+        <p>{{ complain.date }}</p> 
+    </div>
 </section>
+
 
 {% endblock article %}
