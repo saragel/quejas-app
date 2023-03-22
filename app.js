@@ -7,7 +7,8 @@ const path = require('path');
 /* TODO: bcrypt
     sessions
     separa módulo sessions
-    crear barra búsqueda q me busque queja por id */
+    crear barra búsqueda q me busque queja por id 
+    db migrations */
 
 app.listen (port);
 app.use(express.urlencoded({ extended: true })); // para que el servidor procese bien los datos del formulario
@@ -19,37 +20,13 @@ nunjucks.configure('views', {
 });
 
 const mysql = require('mysql');
+// Esta información debería estar en un archivo a parte que NO esté bajo control de versiones
 const connection = mysql.createConnection ({
     host : 'localhost',
     database : 'quejas',
     user : 'quejas',
-    password : 'passpass' // fallo de seguridad, usar bcrypt
+    password : 'passpass'
 });
-
-const sessions = require('express-session');
-const oneDay = 1000 * 60 * 60 * 24; // tiempo de un día usando milisegundos
-
-// session middleware
-app.use(sessions({
-    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767", // (hash) lo q se utiliza para encriptar el sessionid, lo q se guarda en la cookie
-    saveUninitialized:true,
-    cookie: { maxAge: oneDay }, // el tiempo q el navegador tarda en eliminar la cookie
-    resave: false 
-}));
-
-// usuario y contraseña q se deberán autenticar, normalmente se guardan en db, pero la info de esta sesión se guarda en memoria
-const myusername = 'user1'
-const mypassword = 'mypassword'
-
-/*     let session = req.session;
-    if (session.userid) {
-        res.send (`Bienvenid@ ${req.body.username}`);
-    }
-    else {
-        res.send ('Usuario no encontrado');
-    } 
-    CONSEGUIR Q COMPRUEBE Q EL USER/PASS COINCIDAN
-    */
 
 connection.connect(function(err){
     if (err) {
@@ -57,6 +34,75 @@ connection.connect(function(err){
         return;
     }
     console.log ('Connected succesfully!'); 
+});
+
+
+const sessions = require('express-session');
+const oneDay = 1000 * 60 * 60 * 24; // tiempo de un día usando milisegundos
+
+app.use(sessions({
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767", // (hash) lo q se utiliza para encriptar el sessionid, lo q se guarda en la cookie
+    saveUninitialized:true,
+    cookie: { maxAge: oneDay }, 
+    resave: false 
+}));
+
+/*
+// usuario y contraseña q se deberán autenticar, pendiente hacerlo en db
+const myusername = 'user1'
+const mypassword = 'mypassword'  // fallo de seguridad, usar bcrypt
+
+
+//autenticación
+app.post('/login', (req, res) => {
+    let username = req.body.username;
+    let password = req.body.password;
+    if (!username || !password) {
+        res.send('Please, enter your credentials');
+        return;
+    }
+
+    if (username == myusername || password == mypassword) {
+        console.log('Correct credentials!');
+        userId = req.session.userId;
+        // res.redirect ('/'); 
+    } else {
+        res.send('Incorrect credentials!');
+    }
+
+}); */
+
+// en DB, q he metio a pelo: username: sara, password: sara
+
+/* function isAuthenticated (req, res, next) { // meterla en argumentos app.get de las rutas q queramos proteger
+    console.log (req.session.userId);
+    if (req.session.userId ){
+        next();
+        return; // necesario cortar función
+    } else {
+        res.send ('Necesitas logearte');
+    }
+} */
+
+app.post ('/login', (req, res)=>{
+    let user = req.body.username;
+    let pass = req.body.password;
+    connection.query ('SELECT * FROM users'), (err, result, _){
+        if (err) {
+            throw err;
+        }
+        console.log (result);
+        if (result.length == 1 && result[0].password == pass) { // usar bcrypt
+            req.session.userId = result[0].id;
+            res.send ('Credenciales correctas');
+        } else {
+            res.send ('Credenciales inválidos');
+        }
+    }
+}); 
+
+app.get ('/login', (_, res)=> {
+    res.render ("login.html");
 });
 
 app.get ('/', (_, res)=>{
@@ -69,11 +115,13 @@ app.get ('/', (_, res)=>{
     });
 });
 
-app.get ('/login', (_, res)=> {
-    res.render ("login.html");
-});
+app.post ('/queja', (req, res)=> { // introduce campos formulario
+    if(req.session.userid){
+        // meter la queja
+    } else {
+        // redireccionar a login
+    }
 
-app.post ('/queja', (req, res)=> { // mete lo q se introduza en los campos del form (keja y fexa) en los campos respectivos de la db
     let data = {
         body: req.body.keja,
         date: new Date () 
