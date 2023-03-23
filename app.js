@@ -1,14 +1,15 @@
-const express = require('express');
-const app = express();
-const port = 8000;
-const nunjucks = require('nunjucks');
-const path = require('path');
-
 /* TODO: bcrypt
     sessions
     separa módulo sessions
     crear barra búsqueda q me busque queja por id 
     db migrations */
+
+const express = require('express');
+const app = express();
+const port = 8000;
+const nunjucks = require('nunjucks');
+const path = require('path');
+const sessions = require('express-session');
 
 app.listen (port);
 app.use(express.urlencoded({ extended: true })); // para que el servidor procese bien los datos del formulario
@@ -36,97 +37,65 @@ connection.connect(function(err){
     console.log ('Connected succesfully!'); 
 });
 
-
-const sessions = require('express-session');
-const oneDay = 1000 * 60 * 60 * 24; // tiempo de un día usando milisegundos
-
+//cookie config
+const oneDay = 1000 * 60 * 60 * 24; 
 app.use(sessions({
-    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767", // (hash) lo q se utiliza para encriptar el sessionid, lo q se guarda en la cookie
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767", 
     saveUninitialized:true,
-    cookie: { maxAge: oneDay }, 
+    cookie: { secure: false, maxAge: oneDay }, 
     resave: false 
 }));
 
-/*
-// usuario y contraseña q se deberán autenticar, pendiente hacerlo en db
-const myusername = 'user1'
-const mypassword = 'mypassword'  // fallo de seguridad, usar bcrypt
+function isLogged (_, res, next) { //3er argumento rutas q queramos proteger
+    if (req.session.userId) {
+        next();
+    } else {
+        res.send ('Necesitas logearte');
+        res.redirect ('/login');
+    }
+} 
 
-
-//autenticación
-app.post('/login', (req, res) => {
+app.post ('/login', (req, res)=> {
     let username = req.body.username;
     let password = req.body.password;
     if (!username || !password) {
-        res.send('Please, enter your credentials');
-        return;
+        res.send ('Por favor, introduce tus credenciales');
     }
-
-    if (username == myusername || password == mypassword) {
-        console.log('Correct credentials!');
-        userId = req.session.userId;
-        // res.redirect ('/'); 
+    if (username == 'sara' || password == 'sara') { // guardado en db a pelo
+        console.log ('Correct credentials!');
+        connection.query ('SELECT * FROM users', function (err, result, _) {
+            if (err) {
+                throw err;
+            }
+            console.log (result[0]);
+            req.session.userId = result[0].id; // esto no lo entiendo bien
+            req.session.save((err)=>{ if (err) throw err; });
+            res.redirect ('/');
+        });
     } else {
-        res.send('Incorrect credentials!');
+        res.send ('Credenciales incorrectas');
     }
-
-}); */
-
-// en DB, q he metio a pelo: username: sara, password: sara
-
-/* function isAuthenticated (req, res, next) { // meterla en argumentos app.get de las rutas q queramos proteger
-    console.log (req.session.userId);
-    if (req.session.userId ){
+});
+function isLogged (_, res, next) { //3er argumento rutas q queramos proteger
+    if (req.session.userId) {
         next();
-        return; // necesario cortar función
     } else {
         res.send ('Necesitas logearte');
+        res.redirect ('/login');
     }
-} */
+} 
 
-app.post ('/login', (req, res)=>{
-    let user = req.body.username;
-    let pass = req.body.password;
-    connection.query ('SELECT * FROM users'), (err, result, _){
-        if (err) {
-            throw err;
-        }
-        console.log (result);
-        if (result.length == 1 && result[0].password == pass) { // usar bcrypt
-            req.session.userId = result[0].id;
-            res.send ('Credenciales correctas');
-        } else {
-            res.send ('Credenciales inválidos');
-        }
-    }
-}); 
-
-app.get ('/login', (_, res)=> {
-    res.render ("login.html");
-});
-
-app.get ('/', (_, res)=>{
-    connection.query ('SELECT body, date FROM quejas2', function (err, result, _) {
-        if (err) {
-            throw err;
-        }
-        console.log (result);
-        res.render ("index.html", {complains: result, dateFormat: (d)=> d.toDateString()}); 
-    });
-});
-
-app.post ('/queja', (req, res)=> { // introduce campos formulario
-    if(req.session.userid){
+app.post ('/queja', (req, res)=> { 
+    //if(req.session.userid) {
         // meter la queja
-    } else {
+    //} else {
         // redireccionar a login
-    }
-
+    //}
     let data = {
         body: req.body.keja,
         date: new Date () 
     };
-    connection.query ('INSERT INTO quejas2  SET ?', data, function (err, _, _) { // la ? mete el objeto data
+    connection.query ('INSERT INTO quejas2  SET ?', data, function (err, _, _) { 
         if (err) {
             throw err;
         }
@@ -137,6 +106,10 @@ app.post ('/queja', (req, res)=> { // introduce campos formulario
 
 app.get ('/new', (_, res)=> {
     res.render ("newmessage.html");
+});
+
+app.get ('/login', (_, res)=> {
+    res.render ("login.html");
 });
 
 app.get ('/notfound', (_, res)=>{
@@ -161,6 +134,14 @@ app.get('/:id', (req, res) => {
     });
 }); 
 
-// connection.end();
+app.get ('/', (_, res)=>{
+    connection.query ('SELECT body, date FROM quejas2', function (err, result, _) {
+        if (err) {
+            throw err;
+        }
+        console.log (result);
+        res.render ("index.html", {complains: result, dateFormat: (d)=> d.toDateString()}); 
+    });
+});
 
-/* el objeto re.body => si en el formulario hemos puesto name=texto, lo q se envía es texto: y lo q ponga el usuario */
+// connection.end();
