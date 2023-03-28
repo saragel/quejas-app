@@ -1,0 +1,13 @@
+{%extends "base.html"%}
+
+{% block article %} 
+
+<form action="/newuser" method="POST">
+    <label for="username">Nuevo usuario:</label>
+    <input class="input" type="text" name="username"/>
+    <label for="password">Nueva contraseña:</label>
+    <input class="input" type="password" name="password"/>
+    <button type="submit">Registrarse</button>
+</form>
+
+{% endblock article %}
