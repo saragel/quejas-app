@@ -2,7 +2,8 @@
     sessions
     separa módulo sessions
     crear barra búsqueda q me busque queja por id 
-    db migrations */
+    db migrations
+    URM: a través d clases, muestra los datos ordenados en vez de en rows */
 
 const express = require('express');
 const app = express();
@@ -46,12 +47,12 @@ app.use(sessions({
     resave: false 
 }));
 
-function isLogged (_, res, next) { //3er argumento rutas q queramos proteger
-    if (req.session.userId) {
+function isLogged (req, res, next) { //argumento rutas q queramos proteger
+    if (req.session.userId !== undefined) {
         next();
+        console.log ('Bien autenticado');
     } else {
         res.send ('Necesitas logearte');
-        res.redirect ('/login');
     }
 } 
 
@@ -68,24 +69,16 @@ app.post ('/login', (req, res)=> {
                 throw err;
             }
             console.log (result[0]);
-            req.session.userId = result[0].id; // esto no lo entiendo bien
-            req.session.save((err)=>{ if (err) throw err; });
+            req.session.userId = result[0].id; // esto no lo entiendo bien, si está dentro de la función cómo lo voy a usar fuera
+            req.session.save((err)=> { if (err) throw err; });
             res.redirect ('/');
         });
     } else {
         res.send ('Credenciales incorrectas');
     }
 });
-function isLogged (_, res, next) { //3er argumento rutas q queramos proteger
-    if (req.session.userId) {
-        next();
-    } else {
-        res.send ('Necesitas logearte');
-        res.redirect ('/login');
-    }
-} 
 
-app.post ('/queja', (req, res)=> { 
+app.post ('/queja', isLogged, (req, res)=> { 
     //if(req.session.userid) {
         // meter la queja
     //} else {
@@ -104,7 +97,7 @@ app.post ('/queja', (req, res)=> {
     res.redirect('/');
 }); 
 
-app.get ('/new', (_, res)=> {
+app.get ('/new', isLogged, (_, res)=> {
     res.render ("newmessage.html");
 });
 
