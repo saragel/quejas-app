@@ -3,10 +3,7 @@
     sessions con JWT
     sessions con MYSQL
     crear barra búsqueda q me busque queja por id 
-    separar módulos: sesiones, db migrations
-    para siguiente app => ORM: a través d clases, muestra los datos ordenados en vez de en rows
-    importante para gestionar datos de tablas en objetos de JavaScript, lo malo esq no sabemos bien cómo funcionan internamente
-    x ejemplo sequelize */
+    para siguiente app => ORM: x ejemplo sequelize */
 
 const express = require('express');
 const app = express();
@@ -14,7 +11,8 @@ const port = 8000;
 const nunjucks = require('nunjucks');
 const path = require('path');
 const session = require('express-session');
-const MySQLStore = require('express-mysql-session')(session);
+const model = require('./model');
+const db = require('./db');
 
 app.listen(port);
 app.use(express.urlencoded({ extended: true })); // para que el servidor procese bien los datos del formulario
@@ -25,48 +23,7 @@ nunjucks.configure('views', {
     express: app
 });
 
-const options = {
-	host: 'localhost',
-	port: 3306, // otro puerto diferente q en el q tenemos la app pa la memoria de mysql
-	user: 'session_test',
-	password: 'password',
-	database: 'session_test'
-};
-
-const sessionStore = new MySQLStore(options);
-
-app.use(session({
-	key: 'my_key',
-	secret: 'my_secret',
-	store: sessionStore,
-	resave: false,
-	saveUninitialized: true
-}));
-
-sessionStore.onReady().then(() => {
-	console.log('Storage ready!');
-}).catch(err => {
-	console.error('Storage error' + err);
-});
-
-const mysql = require('mysql');
-// Esta información debería estar en un archivo a parte que NO esté bajo control de versiones
-const connection = mysql.createConnection({
-    host: 'localhost',
-    database: 'quejas',
-    user: 'quejas',
-    password: 'passpass'
-});
-
-connection.connect(function (err) {
-    if (err) {
-        console.error('Connection error:' + err);
-        return;
-    }
-    console.log('Connected succesfully!');
-});
-
-//cookie config
+//session + cookie config
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(session({
     secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
@@ -84,27 +41,23 @@ function isLogged(req, res, next) { // argumento rutas q queramos proteger
     }
 }
 
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
+    let user = await db.getUserByUsername (username);
     if (!username || !password) {
         res.send('Por favor, introduce tus credenciales');
     }
-    if (username == 'sara' || password == 'sara') { 
-        console.log('Correct credentials!');
-        connection.query('SELECT * FROM users', function (err, result, _) {
-            if (err) {
-                throw err;
-            }
-            console.log(result[0]);
+    /* TODO: function comprobación credenciales usando bcrypt //
+
             req.session.userId = result[0].id; // lo recuerda fuera de esta función porq guardado en el objeto session, q está en la memoria del ordenador en general
             req.session.save((err) => { if (err) throw err; });
             res.redirect('/');
         });
     } else {
         res.send('Credenciales incorrectas');
-    }
-});
+    } */
+}); 
 
 app.post('/queja', isLogged, (req, res) => {
     //if(req.session.userid) {
@@ -128,7 +81,7 @@ app.post('/queja', isLogged, (req, res) => {
 app.post ('/newuser', (req, res) => {
     let username = req.body.username;
     connection.query ('SELECT ')
-    // vamos a ver en q tabla me está guardando las cosas por dios q no lo entiendo
+    // se guarda en la tabla users, dentro de la db quejas; esta tabla tiene un id, un username y una password
 });
 
 app.get('/new', isLogged, (_, res) => {
@@ -161,14 +114,9 @@ app.get('/:id', isLogged, (req, res) => {
     });
 });
 
-app.get('/', (_, res) => {
-    connection.query('SELECT body, date FROM quejas2', function (err, result, _) {
-        if (err) {
-            throw err;
-        }
-        console.log(result);
-        res.render("index.html", { complains: result, dateFormat: (d) => d.toDateString() });
+app.get('/', async (_, res) => {
+    let quejas = await db.getQuejas();
+        res.render("index.html", { quejas: quejas, dateFormat: (d) => d.toDateString() });
     });
-});
-
+    
 // connection.end();
