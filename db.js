@@ -1,8 +1,6 @@
 // en producción, este archivo no debería estar en el control de versiones
 
 const mysql = require('mysql');
-const { Compilation } = require('webpack');
-const { Queja } = require('./model');
 const model = require('./model');
 
 const connection = mysql.createConnection({
@@ -36,8 +34,13 @@ function getQuejas() {
 function insertQueja(queja) { 
     return new Promise ((resolve, reject) => {
         if (err) reject (err);
-        
-    })
+        connection.query('INSERT INTO quejas2 SET ?',
+        {body: queja.body, date: new Date()},
+        function (err) {
+            if (err) reject (err);
+            resolve(); }
+        );
+    });
 }
 
 function getUserByUsername(username) {
@@ -51,7 +54,7 @@ function getUserByUsername(username) {
     });
 }
 
-function insertUser(/*userid?*/) { }
+/* function insertUser(/*userid?*/) { } */
 
 module.exports = {
     getQuejas: getQuejas,
