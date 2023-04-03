@@ -4,6 +4,7 @@ separar módulos (db migrations)
 mensajes flash
 doublecsrf
 barra de búsqueda que me busque queja por id
+logout
 */
 
 const express = require('express');
@@ -14,10 +15,16 @@ const path = require('path');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
 const saltRounds = 10; // define la complejidad con la q se hashea la password
+const multer = require('multer');
+const upload = multer({ dest: 'uploads' });
+const serveStatic = require('serve-static')
 
 app.listen(port);
 app.use(express.urlencoded({ extended: true })); // para que el servidor procese bien los datos del formulario
 app.use("/static", express.static(path.resolve(__dirname, 'static')));
+app.use(express.static('uploads'));
+app.use(serveStatic('uploads'));
+
 
 nunjucks.configure('views', {
     autoescape: true,
@@ -107,7 +114,7 @@ app.post('/queja', isLogged, (req, res) => {
     }
 });
 
-app.post('/newuser', (req, res) => {
+app.post('/newuser', upload.single ('imagen'), (req, res) => {
     bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
         if (err) throw err;
         let data = {
@@ -121,6 +128,10 @@ app.post('/newuser', (req, res) => {
                 console.log('Usuario registrado');
                 res.send('Usuario registrado');
             });
+        console.log (req.file);
+        connection.query('INSERT INTO files SET ?', { files: req.file.path }, (err, _) => { // path es el campo de 'file' q tiene la URL de la imagen
+            if (err) throw err; 
+        });
     });
     // en tabla users - q hay campos user, password y id. cuando separe los módulos hago el JOIN, para q al hacer el login me compruebe si está registrado en users
 });

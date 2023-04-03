@@ -2,11 +2,13 @@
 
 {% block article %} 
 
-<form action="/newuser" method="POST">
+<form action="/newuser" method="POST" enctype="multipart/form-data">
     <label for="username">Nuevo usuario:</label>
     <input class="input" type="text" name="username"/>
     <label for="password">Nueva contraseña:</label>
     <input class="input" type="password" name="password"/>
+    <label for="imagen">Sube tu avatar:</label>
+    <input class="input" type="file" name="imagen"/>
     <button type="submit">Registrarse</button>
 </form>
 
