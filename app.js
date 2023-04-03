@@ -1,8 +1,10 @@
 /* 
 TODO:
-barra de búsqueda que me busque queja por id
+separar módulos (db migrations)
 mensajes flash
-doublecsrf*/
+doublecsrf
+barra de búsqueda que me busque queja por id
+*/
 
 const express = require('express');
 const app = express();
@@ -11,7 +13,7 @@ const nunjucks = require('nunjucks');
 const path = require('path');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
+const saltRounds = 10; // define la complejidad con la q se hashea la password
 
 app.listen(port);
 app.use(express.urlencoded({ extended: true })); // para que el servidor procese bien los datos del formulario
@@ -89,22 +91,20 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/queja', isLogged, (req, res) => {
-    //if(req.session.userid) {
-    // meter la queja
-    //} else {
-    // redireccionar a login
-    //}
-    let data = {
-        body: req.body.keja,
-        date: new Date()
-    };
-    connection.query('INSERT INTO quejas2  SET ?', data, function (err, _, _) {
-        if (err) {
-            throw err;
-        }
-        console.log('Values added succesfully!');
-    });
-    res.redirect('/');
+    if (req.session.userId) {
+        let data = {
+            body: req.body.keja,
+            date: new Date()
+        };
+        connection.query('INSERT INTO quejas2  SET ?', data, function (err, _, _) {
+            if (err) {
+                throw err;
+            }
+            console.log('Values added succesfully!');
+        });
+    } else {
+        res.redirect ('/');
+    }
 });
 
 app.post('/newuser', (req, res) => {
@@ -123,6 +123,10 @@ app.post('/newuser', (req, res) => {
             });
     });
     // en tabla users - q hay campos user, password y id. cuando separe los módulos hago el JOIN, para q al hacer el login me compruebe si está registrado en users
+});
+
+app.get ('/logout', (_, res) => {
+    res.render ('##');
 });
 
 app.get('/newuser', (_, res) => {
