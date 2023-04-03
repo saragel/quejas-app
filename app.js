@@ -1,10 +1,13 @@
 /* 
 TODO:
+limitación tamaño / tipo de archivo -- multer / q me devuelva imagen q se suba en queja
 separar módulos (db migrations)
 mensajes flash
 doublecsrf
 barra de búsqueda que me busque queja por id
 logout
+POR Q ME PIDE LOGEARME 
+abrir issue de esooo
 */
 
 const express = require('express');
@@ -24,7 +27,7 @@ app.use(express.urlencoded({ extended: true })); // para que el servidor procese
 app.use("/static", express.static(path.resolve(__dirname, 'static')));
 app.use(express.static('uploads'));
 app.use(serveStatic('uploads'));
-
+//app.use(cookieParser());
 
 nunjucks.configure('views', {
     autoescape: true,
@@ -58,6 +61,7 @@ app.use(session({
 }));
 
 function isLogged(req, res, next) { // argumento rutas q queramos proteger
+    console.log(req.session);
     if (req.session.userId !== undefined) {
         next();
         console.log('Bien autenticado');
@@ -82,9 +86,10 @@ app.post('/login', (req, res) => {
         bcrypt.compare(password, result[0].password, (err, correct) => { // en la base de datos se guarda hasheada, así q con poner result[0].password vale
             if (err) throw err;
             if (correct) {
-                // Almacena info del usuario en el parámetro de la sesión userId q yo he establecido; esto lo sigue recordando fuera de la sesión
+                // almacena info del usuario en el parámetro de la sesión userId q yo he establecido
                 req.session.regenerate((err) => { if (err) throw err; });
                 req.session.userId = result[0].id;
+                console.log(req.session.userId);
                 req.session.save(function (err) {
                     if (err) throw err;
                     console.log('Credenciales correctas');
@@ -119,8 +124,10 @@ app.post('/newuser', upload.single ('imagen'), (req, res) => {
         if (err) throw err;
         let data = {
             username: req.body.username,
-            password: hash // guarda la contraseña hasheada
+            password: hash, // guarda pass hasheada
+            files: req.file.path // path es un campo (x defecto) de file
         }
+        console.log (req.file);
         connection.query('INSERT INTO users SET ?',
             data,
             (err, _) => {
@@ -128,16 +135,14 @@ app.post('/newuser', upload.single ('imagen'), (req, res) => {
                 console.log('Usuario registrado');
                 res.send('Usuario registrado');
             });
-        console.log (req.file);
-        connection.query('INSERT INTO files SET ?', { files: req.file.path }, (err, _) => { // path es el campo de 'file' q tiene la URL de la imagen
-            if (err) throw err; 
-        });
     });
     // en tabla users - q hay campos user, password y id. cuando separe los módulos hago el JOIN, para q al hacer el login me compruebe si está registrado en users
 });
 
-app.get ('/logout', (_, res) => {
-    res.render ('##');
+app.get ('/logout', isLogged, (req, res) => {
+    req.session.userId = null;
+    req.session.regenerate ((err) => { if (err) throw err; });
+    res.redirect ('/');
 });
 
 app.get('/newuser', (_, res) => {
