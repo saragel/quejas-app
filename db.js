@@ -31,14 +31,15 @@ function getQuejas() {
     }));
 }
 
-function insertQueja(queja) { 
-    return new Promise ((resolve, reject) => {
-        if (err) reject (err);
+function insertQueja(queja) {
+    return new Promise((resolve, reject) => {
+        if (err) reject(err);
         connection.query('INSERT INTO quejas2 SET ?',
-        {body: queja.body, date: new Date()},
-        function (err) {
-            if (err) reject (err);
-            resolve(); }
+            { body: queja.body, date: new Date() },
+            function (err) {
+                if (err) reject(err);
+                resolve();
+            }
         );
     });
 }
@@ -54,7 +55,7 @@ function getUserByUsername(username) {
     });
 }
 
-/* function insertUser(/*userid?*/) { } */
+/* function insertUser(/*userid?*/) { } * /
 
 module.exports = {
     getQuejas: getQuejas,

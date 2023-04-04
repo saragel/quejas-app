@@ -5,8 +5,6 @@ separar módulos (db migrations)
 mensajes flash
 doublecsrf
 barra de búsqueda que me busque queja por id
-logout
-NO ME DEJA ACCEDER A RUTAS PROTEGIDAS  (ya abrí issue de eso)
 */
 
 const express = require('express');
@@ -19,13 +17,14 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10; // define la complejidad con la q se hashea la password
 const multer = require('multer');
 const upload = multer({ dest: 'uploads' });
-const serveStatic = require('serve-static')
+const serveStatic = require('serve-static');
 
 app.listen(port);
+
 app.use(express.urlencoded({ extended: true })); // para que el servidor procese bien los datos del formulario
 app.use("/static", express.static(path.resolve(__dirname, 'static')));
-app.use(express.static('uploads'));
-app.use(serveStatic('uploads'));
+app.use("/uploads", express.static('uploads'));
+//app.use(serveStatic('uploads'));
 //app.use(cookieParser());
 
 nunjucks.configure('views', {
@@ -106,7 +105,7 @@ app.post('/login', (req, res) => {
 
 app.post('/queja', upload.single('imagen'), isLogged, (req, res) => {
     if (req.session.userId) {
-        console.log (req.session.userId);
+        console.log(req.session.userId);
         let data = {
             body: req.body.keja,
             date: new Date(),
@@ -117,9 +116,10 @@ app.post('/queja', upload.single('imagen'), isLogged, (req, res) => {
                 throw err;
             }
             console.log('Values added succesfully!');
+            res.redirect('/');
         });
     } else {
-        res.redirect ('/');
+        res.redirect('/');
     }
 });
 
@@ -130,7 +130,7 @@ app.post('/newuser', (req, res) => {
             username: req.body.username,
             password: hash, // guarda pass hasheada
         }
-        console.log (req.file);
+        console.log(req.file);
         connection.query('INSERT INTO users SET ?',
             data,
             (err, _) => {
@@ -142,10 +142,15 @@ app.post('/newuser', (req, res) => {
     // en tabla users - q hay campos user, password y id. cuando separe los módulos hago el JOIN, para q al hacer el login me compruebe si está registrado en users
 });
 
-app.get ('/logout', isLogged, (req, res) => {
+/* app.post ('/', (req, res) => { // para hacer barra busqueda q me busque quejas por id
+    let id = req.params.id;
+    connection.query ('SELECT * FROM quejas2 WHERE id = ?', )
+}) */
+
+app.get('/logout', isLogged, (req, res) => {
     req.session.userId = null;
-    req.session.regenerate ((err) => { if (err) throw err; });
-    res.send ('Sesión cerrada');
+    req.session.regenerate((err) => { if (err) throw err; });
+    res.send('Sesión cerrada');
 });
 
 app.get('/newuser', (_, res) => {
@@ -183,7 +188,7 @@ app.get('/:id', isLogged, (req, res) => {
 });
 
 app.get('/', (_, res) => {
-    connection.query('SELECT body, date FROM quejas2', function (err, result, _) {
+    connection.query('SELECT body, date, files FROM quejas2', function (err, result, _) {
         if (err) {
             throw err;
         }

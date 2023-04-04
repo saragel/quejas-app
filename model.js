@@ -3,7 +3,7 @@
 -es más fácil introducirle funcionalidades */
 
 class Queja {
-    constructor (body, date, author) {
+    constructor(body, date, author) {
         this.body = body;
         this.date = date;
         this.author = author // en db este campo es authors
@@ -11,7 +11,7 @@ class Queja {
 }
 
 class User {
-    constructor (id, username, password) {
+    constructor(id, username, password) {
         this.id = id;
         this.username = username;
         this.password = password;

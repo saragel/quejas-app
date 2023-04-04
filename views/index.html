@@ -6,8 +6,9 @@
 {% for complain in complains %}
 <article>
     <div class="queja">
-        <p class="body">{{complain.body}}</p> 
+        <p class="body">{{complain.body}}</p>
         <p>{{ dateFormat(complain.date) }}</p>
+        <img alt="Queja sin imágen" src="{{ complain.files }}" />
     </div>
 </article>
 {% else %}

@@ -5,43 +5,59 @@
     font-size: 11pt;
     text-align: center;
     align-items: center;
-    justify-content: center; 
+    justify-content: center;
 }
+
 h1 {
     font-size: 30pt;
 }
+
 h2 {
     font-size: 25pt;
 }
+
 .queja {
     border: #252627 solid;
     border-width: 1px;
     padding: 10px;
-    margin: 5px;
     border-radius: 10px;
     box-sizing: border-box;
+    display: flex;
     /* width: 500px; */
 }
+
 ul {
     display: flex;
     list-style: none;
 }
+
 li {
     padding-left: 15px;
     padding-right: 15px;
 }
+
 button {
     background-color: #252627;
-    color:#F2EFE9;
+    color: #F2EFE9;
     padding: 7.5px;
 }
+
 .body {
     font-weight: bold;
+    margin: 20px;
 }
+
 .bold {
     font-weight: bold;
 }
+
 .input {
     border: #252627 solid;
     border-width: 1px;
+}
+
+img {
+    height: 150px;
+    margin: 20px;
+    border-radius: 5px;
 }
