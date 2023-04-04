@@ -2,9 +2,10 @@
 
 {% block article %}
 
-<form action="/queja" method="POST">
+<form action="/queja" method="POST" enctype="multipart/form-data">
     <label for="keja">Nueva queja:</label>
     <textarea class="input" placeholder="Escribe tu queja!" name="keja"></textarea>
+    <input class="input" type="file" name="imagen">
     <button type="submit">Subir</button>
     <!-- modificar para q me devuelva imagen q -->
 </form>

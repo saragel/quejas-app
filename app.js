@@ -6,8 +6,7 @@ mensajes flash
 doublecsrf
 barra de búsqueda que me busque queja por id
 logout
-POR Q ME PIDE LOGEARME 
-abrir issue de esooo
+NO ME DEJA ACCEDER A RUTAS PROTEGIDAS  (ya abrí issue de eso)
 */
 
 const express = require('express');
@@ -35,6 +34,7 @@ nunjucks.configure('views', {
 });
 
 const mysql = require('mysql');
+const { emitWarning } = require('process');
 // Esta información debería estar en un archivo a parte que NO esté bajo control de versiones
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -87,13 +87,15 @@ app.post('/login', (req, res) => {
             if (err) throw err;
             if (correct) {
                 // almacena info del usuario en el parámetro de la sesión userId q yo he establecido
-                req.session.regenerate((err) => { if (err) throw err; });
-                req.session.userId = result[0].id;
-                console.log(req.session.userId);
-                req.session.save(function (err) {
+                req.session.regenerate(function (err) {
                     if (err) throw err;
-                    console.log('Credenciales correctas');
-                    res.redirect('/');
+                    req.session.userId = result[0].password; // ????
+                    console.log(req.session.userId);
+                    req.session.save(function (err) {
+                        if (err) throw err;
+                        console.log('Credenciales correctas');
+                        res.redirect('/');
+                    });
                 });
             } else {
                 res.send('Credenciales inválidos');
@@ -102,11 +104,13 @@ app.post('/login', (req, res) => {
     });
 });
 
-app.post('/queja', isLogged, (req, res) => {
+app.post('/queja', upload.single('imagen'), isLogged, (req, res) => {
     if (req.session.userId) {
+        console.log (req.session.userId);
         let data = {
             body: req.body.keja,
-            date: new Date()
+            date: new Date(),
+            files: req.file.path
         };
         connection.query('INSERT INTO quejas2  SET ?', data, function (err, _, _) {
             if (err) {
@@ -119,13 +123,12 @@ app.post('/queja', isLogged, (req, res) => {
     }
 });
 
-app.post('/newuser', upload.single ('imagen'), (req, res) => {
+app.post('/newuser', (req, res) => {
     bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
         if (err) throw err;
         let data = {
             username: req.body.username,
             password: hash, // guarda pass hasheada
-            files: req.file.path // path es un campo (x defecto) de file
         }
         console.log (req.file);
         connection.query('INSERT INTO users SET ?',
@@ -142,7 +145,7 @@ app.post('/newuser', upload.single ('imagen'), (req, res) => {
 app.get ('/logout', isLogged, (req, res) => {
     req.session.userId = null;
     req.session.regenerate ((err) => { if (err) throw err; });
-    res.redirect ('/');
+    res.send ('Sesión cerrada');
 });
 
 app.get('/newuser', (_, res) => {
