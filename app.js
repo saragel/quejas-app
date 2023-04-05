@@ -17,15 +17,27 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10; // define la complejidad con la q se hashea la password
 const multer = require('multer');
 const upload = multer({ dest: 'uploads' });
-const serveStatic = require('serve-static');
+const { doubleCsrf } = require('csrf-csrf');
+const cookieParser = require('cookie-parser');
 
-app.listen(port);
+const doubleCsrfOptions = {
+    getSecret: () => "Secret", // Es una función para poder rotarlo periódicamente, no debería estar en este documento ni ser tan sencillo
+    cookieName: "__Host-psifi.x-csrf-token", // Se recomienda usar el prefijo host
+    size: 64,
+    ignoredMethods: ['GET', 'HEAD', 'OPTIONS'],
+    getTokenFromRequest: (req) => req.body.csrf_token
+};
+
+const {
+    generateToken, // Esto es lo que se debe usar en las rutas para generar un CSRF token hasheado
+    doubleCsrfProtection, // middleware por defecto de protección CSRF
+} = doubleCsrf(doubleCsrfOptions);
 
 app.use(express.urlencoded({ extended: true })); // para que el servidor procese bien los datos del formulario
 app.use("/static", express.static(path.resolve(__dirname, 'static')));
 app.use("/uploads", express.static('uploads'));
-//app.use(serveStatic('uploads'));
-//app.use(cookieParser());
+app.use(cookieParser('thisismysecrctekeyfhrgfgrfrty84fwir767'));
+app.use(doubleCsrfProtection);
 
 nunjucks.configure('views', {
     autoescape: true,
@@ -33,9 +45,9 @@ nunjucks.configure('views', {
 });
 
 const mysql = require('mysql');
-const { emitWarning } = require('process');
+const { emitWarning } = require('process'); // q es esto por dios
 // Esta información debería estar en un archivo a parte que NO esté bajo control de versiones
-const connection = mysql.createConnection({
+const connection = mysql.createConnection( {
     host: 'localhost',
     database: 'quejas',
     user: 'quejas',
@@ -69,7 +81,7 @@ function isLogged(req, res, next) { // argumento rutas q queramos proteger
     }
 }
 
-app.post('/login', (req, res) => {
+app.post('/login', doubleCsrfProtection, (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
     if (!username || !password) {
@@ -103,7 +115,7 @@ app.post('/login', (req, res) => {
     });
 });
 
-app.post('/queja', upload.single('imagen'), isLogged, (req, res) => {
+app.post('/queja', upload.single('imagen'), isLogged, doubleCsrfProtection, (req, res) => {
     if (req.session.userId) {
         console.log(req.session.userId);
         let data = {
@@ -123,19 +135,18 @@ app.post('/queja', upload.single('imagen'), isLogged, (req, res) => {
     }
 });
 
-app.post('/newuser', (req, res) => {
+app.post('/newuser', doubleCsrfProtection, (req, res) => {
+    console.log(req.body);
     bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
         if (err) throw err;
         let data = {
             username: req.body.username,
-            password: hash, // guarda pass hasheada
+            password: hash // guarda pass hasheada
         }
-        console.log(req.file);
         connection.query('INSERT INTO users SET ?',
             data,
             (err, _) => {
                 if (err) throw err;
-                console.log('Usuario registrado');
                 res.send('Usuario registrado');
             });
     });
@@ -150,19 +161,23 @@ app.post('/newuser', (req, res) => {
 app.get('/logout', isLogged, (req, res) => {
     req.session.userId = null;
     req.session.regenerate((err) => { if (err) throw err; });
-    res.send('Sesión cerrada');
+    console.log('Sesión cerrada');
+    res.redirect('/');
 });
 
-app.get('/newuser', (_, res) => {
-    res.render('newuser.html');
+app.get('/newuser', (req, res) => {
+    let token = generateToken(res, req);
+    res.render('newuser.html', {csrf_token: token});
 });
 
-app.get('/new', isLogged, (_, res) => {
-    res.render("newmessage.html");
+app.get('/new', isLogged, (req, res) => {
+    let token = generateToken(res, req);
+    res.render('newmessage.html', {csrf_token: token});
 });
 
-app.get('/login', (_, res) => {
-    res.render("login.html");
+app.get('/login', (req, res) => {
+    let token = generateToken(res, req);
+    res.render('login.html', {csrf_token: token});
 });
 
 app.get('/notfound', (_, res) => {
@@ -197,4 +212,5 @@ app.get('/', (_, res) => {
     });
 });
 
-    // connection.end();
+app.listen(port);
+// connection.end();

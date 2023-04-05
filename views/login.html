@@ -3,6 +3,7 @@
 {% block article %}
 
 <form action="/login" method="POST">
+    <input name="csrf_token" type="hidden" value="{{csrf_token}}"/>
     <label for="username">Usuario:</label>
     <input class="input" type="text" name="username" />
     <label for="password">Contraseña:</label>

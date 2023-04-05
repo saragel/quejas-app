@@ -3,6 +3,7 @@
 {% block article %}
 
 <form action="/queja" method="POST" enctype="multipart/form-data">
+    <input name="csrf_token" type="hidden" value="{{csrf_token}}"/>
     <label for="keja">Nueva queja:</label>
     <textarea class="input" placeholder="Escribe tu queja!" name="keja"></textarea>
     <input class="input" type="file" name="imagen">
