@@ -1,0 +1,817 @@
+apt install vim
+campus2b
+sudo apt install vim
+sudo apt install python
+sudo apt install python3
+cd Escritorio/
+ls
+cd el\ tiempo/
+python3 -m http.server
+ip addtr
+ip addr
+git://git.elenq.tech/learning-web
+clone git git://git.elenq.tech/learning-web
+python3 -m http.server
+cd js
+cd /Escritorio/curso desarrollo/js
+cd/Escritorio/curso desarrollo/js
+cd/Escritorio/curso desarrollo/js/js1.html
+cd
+/curso desarrollo/
+cd /curso desarrollo/
+cd js1.html
+pwd
+cd js
+cd..
+..cd
+cd ..
+cd js
+python3 -m http.server
+cd js1.html
+cd js1
+python3 -m http.server
+ls
+cd Escritorio
+cd curso desarrollo
+cd js
+cd js
+cd ..
+ls
+cd js
+python3 -m http.server
+ls
+python3 -m http.server
+git add
+https://codeberg.org/Saryaragel/Timeapp.git
+python3 -m http.server
+python 3 -m http.server
+python3 -m http.server
+node
+ls
+cd Descargas/
+ls --help
+mkdir Hola
+cd Hola/
+-m
+--m
+man
+man man
+pwd
+c
+man readline
+cd
+nano
+npm webpack install
+npm help
+npm install webpack
+npm install mithrill
+nano
+npm init
+python3 -m http.server
+npm install --save-dev jest
+cd Mi proyecto/
+pwd
+cd desktop/
+cd ../
+cd /..
+pwd
+cd
+cd Mi proyecto/
+cd "Mi proyecto"/
+pwd
+cd /home/alumno/curso desarrollo/Mi proyecto/
+cd /Mi proyecto/
+npm init
+npm install --save-dev jest
+npm run test 
+npm init
+npm install --saveDev
+npm install --save-dev
+npm init
+npm test
+install --save-dev jest
+npm install --save-dev jest
+npm run test
+npm init
+npm install --save-dev jest
+npm run test
+npm run tst
+npm run test
+npm install --save-dev jest
+npm run test
+npm install --save-dev jest 
+npm run test
+npm run testy
+npm run test
+npm install --save-dev jest
+npm run test
+git clone https://codeberg.org/ekaitz-zarraga/functools.git
+npm install
+npm run test
+run tests
+npm test
+git clone https://codeberg.org/Saryaragel/functools.git
+rm -rf functools/
+git clone https://codeberg.org/Saryaragel/functools.git
+cd functools
+npm install
+npm test
+npm run tests
+npm test
+..cd
+../cd
+cat
+git clone https://codeberg.org/Saryaragel/functools.git
+vim functools
+cd functools/
+git pull
+npm test
+function max (arr) {
+npm test
+git add https://codeberg.org/Saryaragel/CV.git
+git add [https://codeberg.org/Saryaragel/CV.git]
+git clone https://codeberg.org/Saryaragel/CV.git
+git add https://codeberg.org/Saryaragel/CV.git
+git commit [-m primera versión de la cuadrícula (4 columnas, filas automáticas)]
+git commit [-m primera versión de la cuadrícula: 4 columnas]
+python3 -m http.server
+git clone https://codeberg.org/Saryaragel/CV.git
+git add 
+git status
+git add https://codeberg.org/Saryaragel/CV.git
+git commit https://codeberg.org/Saryaragel/CV.git
+git commmit -m "primera versión de la cuadrícula: 4 columnas"
+git commit -m "primera versión de la cuadrícula: 4 columnas"
+git add 
+git add *
+git add ~/Escritorio/curso desarrollo/cv
+git push
+git push --set-upstream origin main
+git push -u origin main
+git clone https://codeberg.org/Saryaragel/resume.git
+gitpush
+git push
+git init 
+git clone https://codeberg.org/Saryaragel/resume.git
+git commit "segunda versión cuadrícula"
+git add ~/Escritorio/curso desarrollo/cv
+git clone 
+python3 -m http.server
+touch README.md
+git init
+git checkout -b main
+git add README.md
+git commit -m "primera versión de la cuadrícula"
+git config --global user.email sarya.ragel@gmail.com
+git config --global user.name "Saryaragel"
+git commit -m "primera versión de la cuadrícula"
+git remote add origin https://codeberg.org/Saryaragel/resume.git
+git push -u origin main
+git add .
+git status
+ls CV/
+git rm -rf CV
+rm -rf CV
+git status
+git reset CV
+git reset
+git status
+git add .
+git status
+git commit
+git push
+git status
+git submodule status
+ls
+ls resume/
+rm -rf resume/
+git status
+git add resume 
+git status
+git commit --amend
+git push
+git push --force
+ls
+ls -a
+cat .git/config 
+git clone https://codeberg.org/Saryaragel/Pokedex.git
+git init
+git add 
+git add .
+git add ç
+git add 
+git add .
+git add *
+git add 
+git add index.html index.js Pokedex/ r styles.css randomizer.html randomizer.js styles.css
+git add index.html       index.js         Pokedex/         r styles.css     randomizer.html  randomizer.js    styles.css 
+git status
+git add
+git add .
+git add *
+git commit -m "Primera versión"
+git push
+git remote add origin https://codeberg.org/Saryaragel/Pokedex.git
+git push -u origin main
+git push
+python3 -m http.server
+git init
+git add correo.png     .git/          hola.css       index.html     README.md      sarita.png     tlf.png        ubicacion.png
+git commit "segunda versión"
+git push
+git init
+git commit "segunda versión"
+git status
+git add hola.css    index.html  
+git commit "segunda versión2
+git restore
+
+npm install --save-dev jest
+npm run test
+python3 -m http.server
+cd functools
+npm install --save-dev jest
+npm run test
+npm test
+npm run test
+npm test
+git add 
+git add .
+git commit "función bubblesort"
+git commit -m "función bubblesort"
+git push
+cd cv
+git init
+git add . 
+git commit -m "grid columns mods, info completed"
+git push
+python3 -m http.server
+git clone https://codeberg.org/Saryaragel/conway-game.git
+git add 
+git add conway-game/   index.html     index.js       index.test.js  styles.css 
+git clone https://codeberg.org/Saryaragel/conway-gol.git
+npm install --save-dev jest
+npm run test
+npm install --save-dev jest
+npm run test
+npm run 
+npm init
+npm run test
+run test
+npm run tesgt
+npm run test
+npm install jest --save-dev
+npm run test
+npm run tesgt
+npm run test
+/*    const canvas = document.getElementById ("canvas");
+/*    for (i = square_size; i < canvas.width; i +=square_size) { // dibujar columnas
+npm install --save-dev jest
+npm run test
+npm install --save-dev jest
+npm run test
+python3 -m http.server
+$ npm install express --save
+$ npm install express
+sudo apt install express
+pwd
+cd curso desarrollo
+cd ./curso desarrollo
+cd express.js
+cd /curso desarrollo
+pwd
+cd /home/alumno/Escritorio/curso desarrollo/express.js
+cd express.js
+pwd
+$ npm install -g express
+sudo apt install express
+npm install express
+npm init
+npm install nunjucks
+$ npm install express-session
+sudo apt install express-session
+sudo npm install express-session
+npm install -g npm@9.6.0
+npm install --save-dev nodemon 
+npx nodemon app.js
+npm start
+npm init
+npm install express
+npm install nunjucks
+npm install --save-dev nodemon
+npm start
+git init
+git commit
+git add
+git add .
+git commit
+npm install express nunjucks
+git init
+git commit
+git push
+git push https://codeberg.org/Saryaragel/first-backend-exercise.git
+git push --set-upstream https://codeberg.org/Saryaragel/first-backend-exercise.git master
+npm install nodemon
+npm start nodemon
+npm install nunjucks
+npm install express
+npm init
+npm install express
+npm install nunjucks
+npm start
+git inti
+git init
+git add .
+echo "node_modules" > .gitignore
+git reset node_modules/
+git status
+git .gitignore
+git add .gitignore
+git status
+ls node_modules/
+git status
+git commit
+npm init
+npm install
+npm fund
+npm install nunjucks
+npms install express
+sudo apt install express
+npm start
+npm install
+npm start
+npm install
+npm start
+npm install bcrypt
+git add .
+git commit
+git init
+git commit -m "code"
+git add . 
+git commit -m "code"
+git push
+git push 
+git push https://codeberg.org/Saryaragel/conway-gol.git
+git push --set-upstream https://codeberg.org/Saryaragel/conway-gol.git master
+git pull
+git branch --set-upstream-to=<remoto>/<rama> master
+git commit
+git remote add origin https://codeberg.org/Saryaragel/second-backend-exercise.git
+git push -u origin main
+git init
+git clone https://codeberg.org/Saryaragel/second-backend-exercise.git
+git add . 
+git checkout -b main
+git add .
+git add 
+git add .
+git remote add origin https://codeberg.org/Saryaragel/second-backend-exercise.git
+git push -u origin main
+git commit
+git add.
+add
+git add .
+git clonehttps://codeberg.org/Saryaragel/second-backend-exercise.git
+git clone https://codeberg.org/Saryaragel/second-backend-exercise.git
+git init
+git add .
+git status
+git add <app.js>
+git add <archivo>app.js
+git add <app.js>
+git push
+git push --set-upstream origin main
+git status
+git add
+git add .
+git commit
+git add .
+git status
+git push
+git push --set-upstream origin main
+ls -la
+vim .git/config 
+git add
+git add .
+ls
+cd second-backend-exercise/
+ls
+cd ..
+mv second-backend-exercise/.git/config  .git/config 
+rm -rf second-backend-exercise/
+ls
+git status
+git add .
+git status
+git reset node_modules/
+vim .gitignore
+git status
+git add .gitignore 
+git commit -m "Primer commit"
+git push
+git push -u origin main
+git commit -m "Segundo commit"
+git add .
+git commit -m "Segundo commit"
+git push
+npm inist
+npm init
+--save-dev nodemon 
+npm install --save-dev nodemon
+npm run start
+npm init
+npm run start
+git clone https://codeberg.org/Saryaragel/backend-message-app.git
+git inti
+git init
+git add . 
+git push
+npm install nunjucks
+.gitignore node_modules
+.git.ignore node_modules
+npm run start
+npm install nodemon
+npm run start
+git init
+git add .
+git commit -m "Primer commit"
+git status
+npm run start
+node app.js 
+npm run start
+npm install express
+npm run start
+ç
+npm run start
+git init
+git remote add origin https://codeberg.org/Saryaragel/backend-message-app.git
+git push -u origin main
+git commit -m "Primer commit"
+git add .
+git commit -m "Primer commit"
+git push
+git push --set-upstream origin main
+git push
+git push 
+git push --set-upstream origin master
+npm run start
+npm install sqlite3
+sudo apt install sqlite3
+--fix-missing
+apt-get update
+sudo apt install sqlite3
+sqlite
+.help
+sudo apt install sqlite3
+ls
+sqlite2
+sqlite3
+ls
+sqlite3
+select * from workers
+sqlite3
+vim basededatos.db 
+sqlite3 basededatos.db 
+sqlite3
+npm install sqlite3
+apt install mysql-server mysql-client
+apt sudo install mysql-server mysql-client
+sudo apt install mysql-server mysql-client
+mysql
+sudo mysql
+git remote add origin https://codeberg.org/Saryaragel/mysql-node-first-exercise.git
+git init
+git checkout -b main
+git add README.md
+git add 
+git add .
+git commit -m "first commit"
+touch .gitignore
+ls -la
+vim .gitignore 
+echo "node_modules" > .gitignore 
+cat .gitignore 
+git add .gitignore
+git reset node_modules/
+git status
+git reset --soft HEAD^
+git log
+git reset 047803f8aaaa5d32f4c5b37c1a2b500359bbda91 --soft
+git status
+git update-ref -d HEAD
+git status
+git reset node_modules
+git status
+git commit 
+git push 
+git remote add origin https://codeberg.org/Saryaragel/mysql-node-first-exercise.git
+git push -u origin main
+mysql -u pruebas -p
+npm install mysql
+node databasetest.js
+sudo mysql
+git remote add origin https://codeberg.org/Saryaragel/quejas-app.git
+.git
+run start
+start
+run start
+npm install nodemon
+run start
+npm run start
+sudo mysql
+npm run start
+sudo mysql
+npm run start
+npm init
+npm install --save-dev nodemon
+npm install express
+npm install mysql
+npm install nunjucks
+git init
+git add .
+git commit -m "Primer commit"
+.gitignore
+vim .gitignore
+git clone https://codeberg.org/Saryaragel/quejas-app.git
+git init
+git add .
+git push origin main
+git push
+git remote add origin https://codeberg.org/Saryaragel/quejas-app.git
+git push -u origin main
+npm run start
+mysql -u quejas -p
+sudo mysql
+mysql -u quejas_admin -p
+sudo mysql
+mysql -u quejas_admin -p
+run npm start
+npm start
+git remote add origin https://codeberg.org/Saryaragel/quejas-app.git
+git push -u origin main
+git commit -m "first commit"
+git add .
+git chekout -b master
+git checkout -b main
+git commit -m "first commit"
+git add .
+npm install express-session
+git init
+git checkout -b main
+git add .
+ls
+mv static\ / static
+ls
+npm start
+mysql -u quejas -p
+git init
+git commit -m "first commmit"
+git add .
+git push
+git push --set-upstream origin main
+npm start
+git init
+git add .
+git commit -m "Segundo commit"
+git push
+git inti
+git init
+git add . 
+git commit -m "Tercer commit"
+git push
+git inti
+git init
+git add .
+git commit -m "Next commit! :)"
+git push
+git init
+git add .
+git commit -m "Commit!"
+git push
+git init
+git add .
+git commit -m "added session middleware"
+git push
+git init 
+git add .
+git commmit -m "added some more stuff abut sessions"
+git commit -m "added some more stuff abut sessions"
+git push
+npm run start
+git init
+.gitignore
+sudo npm remove npm -g
+node
+sudo apt install nodejs
+node
+npm install -g
+sudo apt install npm
+npm install -g npm
+sudo apt install npm
+git init
+git add .
+git commit -m "trying sessions"
+git push
+git add .
+git commit -m "node_modules in the .gitignore directoy"
+git push
+vim .gitignore
+npm install bcrypt
+sudo mysql
+npm run start
+npm start
+npm install nodemon
+npm start
+npm install nunjucks
+npm install express
+npm i express-session
+npm installmysql
+sudo apt mysql
+npm installbcrypt
+sudo mysql
+npm i mysql
+npm run start
+git init
+git add .
+git commit -m "Added sessions in memory"
+git push
+npm stat
+npm start
+npm install nodemon
+npm start
+npm i mysql
+python -m http.server
+python -m http-server
+npm install python
+npm init
+npm start
+git init
+git add .
+git commmit -m "added function to protect routes"
+git commit -m "added function to protect routes"
+git push
+npm install express-mysql-session --save
+git init
+git add .
+git commit -m "intentando poner sesiones con mysql pero sale mal :)"
+git push
+npm run start
+git init
+git add .
+git commit -m "cambios mínimos para añadir aceleración al pajarito"
+git push
+git remote add https://codeberg.org/Saryaragel/flappy-bird.git
+git clone https://codeberg.org/Saryaragel/flappy-bird.git
+git init 
+git add .
+git commit -m "pajarillo"
+git add .
+git init
+git add .
+git commit -m "aceleración pajarito"
+git push
+git remote add pajarito https://codeberg.org/Saryaragel/flappy-bird.git
+git push
+git push pajarito
+git push --set-upstream pajarito master
+python3 -m http.server
+git init
+git add .
+git commit -m "Separando los modelos y las bases de datos del js principal, aún no está terminado"
+git push
+mysql
+sudo mysql
+git inti
+git init
+git add .
+git commit -m "volviendo un poco atrás porq tenía un cristo montao"
+git push
+npm i bcrypt
+git init
+git add .
+git commit -m "POR FIN AÑADÍ BCRYPT"
+git push
+npm install cookie-parser csrf-csrf
+npm install cookie-parser
+npm run start
+npm init
+npm install express
+npm install nunjucks
+npm install nodemon
+npm install multer
+sudo mysql
+npm run start
+sudo mysql
+npm install serve-static
+npm run start
+git init
+git status
+git add .
+git commit -m "first commit"
+git remote add origin serving-images-test https://codeberg.org/Saryaragel/serving-images-test.git
+git push
+git remote add images https://codeberg.org/Saryaragel/serving-images-test.git
+git push images
+git push --set-upstream images master
+sudo mysql
+npm install multer
+npm run start
+git diff
+git stash
+git stash pop
+git status
+git log
+git checkout temp
+git checkout .-b temp
+git checkout -b temp
+git log
+git checkout master 
+git stash
+git log
+git log --all
+git checkout a4c07a8755f31a7e52670736df14835cf481283d
+git checkout 7779871bb9444e69dc5106fe9d1b5ef2547720fc
+git checkout temp
+git stash pop
+git status
+git stash
+git checkout master
+git stash pop
+git status
+vim app.js 
+git log
+git stash
+git checkout main
+git reset --main
+git reset main
+git status
+git reset --hard main
+git status
+npm install
+git status
+git add .gitignore
+git status
+git commit -m "add gitignore correctly :)"
+git diff
+git push
+git push --set-upstream origin master
+git add .
+git commit -m 
+git commit
+git commit -m "abrir issue"
+git push
+npm install multer --save
+sudo mysql
+git inti
+git init
+git add .
+git commit -m "subir archivos al formulario de registro"
+git push
+sudo mysql
+npm install cookie-session
+sudo mysql
+git init
+git add .
+git commit -m "added .gitignore"
+git push
+npm run start
+mysql -u ek --host=192.168.8.165 -p
+sudo mysql -u ek --host=192.168.8.165 -p
+sudo mysql
+git init
+git add .
+git commit -m "bug arreglado, añadí imágenes a la subida de quejas"
+git push
+npm i csrf-csrf
+npm i express-csrf-double-submit-cookie
+sudo mysq
+sudo mysql
+git init
+git commit -m "añadí imágenes en el html de las quejas"
+git push
+git add .
+git push
+git status
+git add .
+git commit -m "imágenes, bug arreglado"
+git push
+npm run start
+sudo mysql
+npm install cookie-parser csrf-csrf
+npm install csrf-csrf
+npm run start
+git inti
+git init
+git add .
+git commit -m "Added CSRF protection"
+git push
+npm run start
+sudo mysql
+npm run start
+sudo lsof -i :8000
+kill -9 <PID>
+kill -9 :3000
+kill -9 3000
+npm run start
+npm i express-flash message
+npm run start

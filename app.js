@@ -3,7 +3,7 @@ TODO:
 limitación tamaño / tipo de archivo -- multer / q me devuelva imagen q se suba en queja
 separar módulos (db migrations)
 mensajes flash
-doublecsrf
+ERROR: invalid csrf token
 barra de búsqueda que me busque queja por id
 */
 
@@ -31,13 +31,13 @@ const doubleCsrfOptions = {
 const {
     generateToken, // Esto es lo que se debe usar en las rutas para generar un CSRF token hasheado
     doubleCsrfProtection, // middleware por defecto de protección CSRF
-} = doubleCsrf(doubleCsrfOptions);
+} = doubleCsrf(doubleCsrfOptions); 
 
 app.use(express.urlencoded({ extended: true })); // para que el servidor procese bien los datos del formulario
 app.use("/static", express.static(path.resolve(__dirname, 'static')));
 app.use("/uploads", express.static('uploads'));
 app.use(cookieParser('thisismysecrctekeyfhrgfgrfrty84fwir767'));
-app.use(doubleCsrfProtection);
+app.use (flash);
 
 nunjucks.configure('views', {
     autoescape: true,
@@ -81,6 +81,16 @@ function isLogged(req, res, next) { // argumento rutas q queramos proteger
     }
 }
 
+function flash(req, res, next) {
+    console.log(req.session);
+    if (req.session && req.session.flash) {
+        req.locals = {}; 
+        req.locals.flash = req.session.flash;
+        delete req.session.flash;
+    }
+    next();
+}
+
 app.post('/login', doubleCsrfProtection, (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
@@ -100,8 +110,9 @@ app.post('/login', doubleCsrfProtection, (req, res) => {
                 // almacena info del usuario en el parámetro de la sesión userId q yo he establecido
                 req.session.regenerate(function (err) {
                     if (err) throw err;
-                    req.session.userId = result[0].password; // ????
+                    req.session.userId = result[0].password;
                     console.log(req.session.userId);
+                    req.session.flash = "¡Bienvenid@, " + username + "!";
                     req.session.save(function (err) {
                         if (err) throw err;
                         console.log('Credenciales correctas');
@@ -136,7 +147,6 @@ app.post('/queja', upload.single('imagen'), isLogged, doubleCsrfProtection, (req
 });
 
 app.post('/newuser', doubleCsrfProtection, (req, res) => {
-    console.log(req.body);
     bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
         if (err) throw err;
         let data = {
@@ -166,7 +176,7 @@ app.get('/logout', isLogged, (req, res) => {
 });
 
 app.get('/newuser', (req, res) => {
-    let token = generateToken(res, req);
+    let token = generateToken(res, req); // orden argumentos inverso
     res.render('newuser.html', {csrf_token: token});
 });
 
@@ -202,13 +212,15 @@ app.get('/:id', isLogged, (req, res) => {
     });
 });
 
-app.get('/', (_, res) => {
+app.get('/', (req, res) => {
+    console.log(req.locals); // me da undefined porq en algún punto del login la sesión se pierde
+    let mensaje = req.locals ? req.locals.flash : null; // si req.locals = true return flash, else return null
     connection.query('SELECT body, date, files FROM quejas2', function (err, result, _) {
         if (err) {
             throw err;
         }
         console.log(result);
-        res.render("index.html", { complains: result, dateFormat: (d) => d.toDateString() });
+        res.render("index.html", { complains: result, dateFormat: (d) => d.toDateString(), mensaje_flash: mensaje });
     });
 });
 

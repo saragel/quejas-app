@@ -3,6 +3,14 @@
 {% block article %}
 <h1>Aquí están todas las quejas 💅</h1>
 
+{% if mensaje_flash %}
+
+<div class="flash">
+    {{ mensaje_flash }}
+</div> 
+
+{% endif %}
+
 {% for complain in complains %}
 <article>
     <div class="queja">
