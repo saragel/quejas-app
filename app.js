@@ -91,7 +91,7 @@ function flash(req, res, next) {
     next();
 }
 
-app.post('/login', doubleCsrfProtection, (req, res) => {
+app.post('/login', /*doubleCsrfProtection*/ (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
     if (!username || !password) {
@@ -126,7 +126,7 @@ app.post('/login', doubleCsrfProtection, (req, res) => {
     });
 });
 
-app.post('/queja', upload.single('imagen'), isLogged, doubleCsrfProtection, (req, res) => {
+app.post('/queja', upload.single('imagen'), isLogged, /*doubleCsrfProtection*/ (req, res) => {
     if (req.session.userId) {
         console.log(req.session.userId);
         let data = {
@@ -146,7 +146,7 @@ app.post('/queja', upload.single('imagen'), isLogged, doubleCsrfProtection, (req
     }
 });
 
-app.post('/newuser', doubleCsrfProtection, (req, res) => {
+app.post('/newuser', /*doubleCsrfProtection*/ (req, res) => {
     bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
         if (err) throw err;
         let data = {
@@ -176,18 +176,18 @@ app.get('/logout', isLogged, (req, res) => {
 });
 
 app.get('/newuser', (req, res) => {
-    let token = generateToken(res, req); // orden argumentos inverso
-    res.render('newuser.html', {csrf_token: token});
+    //let token = generateToken(res, req); // orden argumentos inverso
+    res.render('newuser.html', /*{csrf_token: token}*/);
 });
 
 app.get('/new', isLogged, (req, res) => {
-    let token = generateToken(res, req);
-    res.render('newmessage.html', {csrf_token: token});
+    //let token = generateToken(res, req);
+    res.render('newmessage.html', /*{csrf_token: token}*/);
 });
 
 app.get('/login', (req, res) => {
-    let token = generateToken(res, req);
-    res.render('login.html', {csrf_token: token});
+    //let token = generateToken(res, req);
+    res.render('login.html', /*{csrf_token: token}*/);
 });
 
 app.get('/notfound', (_, res) => {
@@ -213,7 +213,7 @@ app.get('/:id', isLogged, (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    console.log(req.locals); // me da undefined porq en algún punto del login la sesión se pierde
+    console.log(req.locals); 
     let mensaje = req.locals ? req.locals.flash : null; // si req.locals = true return flash, else return null
     connection.query('SELECT body, date, files FROM quejas2', function (err, result, _) {
         if (err) {
